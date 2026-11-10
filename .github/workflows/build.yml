@@ -20,9 +20,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build debug APK (installable on a phone)
+        # The cargo-apk image ships an old Rust; current crates need a newer one.
         run: |
-          docker run --rm -v "$PWD":/root/src -w /root/src notfl3/cargo-apk \
+          docker run --rm -v "$PWD":/root/src -w /root/src notfl3/cargo-apk sh -c '
+            set -e
+            rustc --version
+            rustup toolchain install stable --profile minimal
+            rustup default stable
+            rustup target add armv7-linux-androideabi aarch64-linux-android
+            rustc --version
             cargo quad-apk build
+          '
       - name: List outputs
         run: find target/android-artifacts -name '*.apk'
       - uses: actions/upload-artifact@v4
