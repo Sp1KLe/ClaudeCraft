@@ -3,6 +3,11 @@ name = "claudecraft"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+# The Android launcher loads "libgame.so", so the target must be called "game".
+name = "game"
+path = "src/main.rs"
+
 [dependencies]
 macroquad = "0.4"
 claudecraft-net = { path = "net" }
