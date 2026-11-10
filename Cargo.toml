@@ -1,0 +1,25 @@
+[package]
+name = "claudecraft"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+macroquad = "0.4"
+claudecraft-net = { path = "net" }
+
+# Debug APKs are what we install while developing; keep them playable.
+[profile.dev]
+opt-level = 2
+
+[package.metadata.android]
+package_name = "org.claudecraft.game"
+label = "ClaudeCraft"
+version_code = 1
+version_name = "0.1.0"
+build_targets = ["armv7-linux-androideabi", "aarch64-linux-android"]
+
+[package.metadata.android.activity_attributes]
+"android:exported" = "true"
+
+[[package.metadata.android.permission]]
+name = "android.permission.INTERNET"

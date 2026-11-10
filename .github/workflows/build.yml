@@ -1,0 +1,31 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-net:
+    name: Test networking crate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo test --manifest-path net/Cargo.toml
+
+  android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build debug APK (installable on a phone)
+        run: |
+          docker run --rm -v "$PWD":/root/src -w /root/src notfl3/cargo-apk \
+            cargo quad-apk build
+      - name: List outputs
+        run: find target/android-artifacts -name '*.apk'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ClaudeCraft-apk
+          path: target/android-artifacts/**/*.apk

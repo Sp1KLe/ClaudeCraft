@@ -1,0 +1,11 @@
+[package]
+name = "claudecraft-net"
+version = "0.1.0"
+edition = "2021"
+description = "Dependency-free Minecraft networking helpers for ClaudeCraft"
+
+[dependencies]
+
+# Standalone on purpose: lets `cargo test` run in this folder without
+# pulling in the game's graphics dependencies.
+[workspace]
