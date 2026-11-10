@@ -16,7 +16,7 @@ package_name = "org.claudecraft.game"
 label = "ClaudeCraft"
 version_code = 1
 version_name = "0.1.0"
-build_targets = ["armv7-linux-androideabi", "aarch64-linux-android"]
+build_targets = ["armv7-linux-androideabi", "aarch64-linux-android", "x86_64-linux-android"]
 
 [package.metadata.android.activity_attributes]
 "android:exported" = "true"
