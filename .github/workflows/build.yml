@@ -31,9 +31,10 @@ jobs:
             rustc --version
             cargo quad-apk build
           '
-      - name: List outputs
-        run: find target/android-artifacts -name '*.apk'
+      - name: Fix file ownership (the container built as root)
+        run: sudo chown -R "$USER" target
       - uses: actions/upload-artifact@v4
         with:
           name: ClaudeCraft-apk
-          path: target/android-artifacts/**/*.apk
+          path: target/android-artifacts/debug/apk/claudecraft.apk
+          if-no-files-found: error
