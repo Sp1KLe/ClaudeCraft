@@ -2,10 +2,11 @@
 # Installs the APK on the emulator, launches it, and prints what happened.
 # Never fails the job: the point is to read the log.
 APK="$1"
-PKG=org.claudecraft.game
 
 echo "=== badging ==="
 AAPT=$(ls "$ANDROID_HOME"/build-tools/*/aapt 2>/dev/null | tail -1)
+PKG=$("$AAPT" dump badging "$APK" | sed -n "s/^package: name='\([^']*\)'.*/\1/p")
+echo "package under test: $PKG"
 "$AAPT" dump badging "$APK" 2>&1 | grep -E "^package|sdkVersion|targetSdk|native-code|launchable|uses-permission|application-label:" | head -20
 echo "=== apk native libs ==="
 unzip -l "$APK" | grep -E "\.so|\.dex" | head -20
